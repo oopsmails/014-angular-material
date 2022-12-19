@@ -1,0 +1,17 @@
+<h1>Home</h1>
+<p>
+  This is in 'div class="mainContainer"''. It is defined in
+  <span class="spanFileBackground">styles.scss</span>, but overriden in
+  <span class="spanFileBackground">home.component.scss</span>.
+</p>
+
+<h2>
+  Home Tab: for testing common components in
+  <i [innerHtml]="'core' | highlighter : 'core' : 'partial'"></i>
+  and
+  <i [innerHtml]="'shared' | highlighter : 'shared' : 'full'"></i>
+</h2>
+<hr />
+
+<p><a routerLink="">routerLink home</a></p>
+<app-footer></app-footer>

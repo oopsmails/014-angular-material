@@ -2,12 +2,11 @@
 
 $ node -v v16.13.0 $ npm -v 8.1.0
 
-<h2>
-  Home Tab: for testing common components in
-  <i [innerHtml]="'core' | highlighter : 'core' : 'partial'"></i>
-  and
-  <i [innerHtml]="'shared' | highlighter : 'shared' : 'full'"></i>
-</h2>
+<div>
+  <h2>Where to GO?</h2>
+  <ul>
+    <li><a routerLink="home">Home Component</a></li>
+  </ul>
+</div>
 
-<p><a routerLink="">routerLink home</a></p>
-<app-footer></app-footer>
+<router-outlet></router-outlet>
