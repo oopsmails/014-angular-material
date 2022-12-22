@@ -1,43 +1,45 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { HighlighterPipe } from './pipes/highlighter.pipe';
+import { CommonModule } from '@angular/common';
+import { MatDividerModule, MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, MatListModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
 
+import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { GithubService } from './services/github.service';
-import { SharedDataService } from './services/shared.data.service';
-import { StateService } from './services/state.service';
-import { UtilsService } from './services/utils.service';
-import { WikipediaService } from './services/wikipedia.service';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AreaComponent } from './widgets/area/area.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { CardComponent } from './widgets/card/card.component';
+import { PieComponent } from './widgets/pie/pie.component';
 
 @NgModule({
-  declarations: [HighlighterPipe, NotFoundComponent, FooterComponent],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    AreaComponent,
+    CardComponent,
+    PieComponent
+  ],
   imports: [
     CommonModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatMenuModule,
+    MatListModule,
+    RouterModule,
+    HighchartsChartModule
   ],
   exports: [
-    CommonModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HighlighterPipe,
-    NotFoundComponent,
+    HeaderComponent,
     FooterComponent,
-  ],
-  providers: [
-    UtilsService,
-    SharedDataService,
-    WikipediaService,
-    GithubService,
-    StateService,
-  ],
+    SidebarComponent,
+    AreaComponent,
+    CardComponent,
+    PieComponent
+  ]
 })
-export class SharedModule {}
+export class SharedModule { }

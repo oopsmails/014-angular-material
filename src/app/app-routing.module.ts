@@ -1,16 +1,23 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { Routes, RouterModule } from '@angular/router';
+import { DefaultComponent } from './layouts/default/default.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { PostsComponent } from './modules/posts/posts.component';
 
-const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: '**', component: NotFoundComponent },
-];
+const routes: Routes = [{
+  path: '',
+  component: DefaultComponent,
+  children: [{
+    path: '',
+    component: DashboardComponent
+  }, {
+    path: 'posts',
+    component: PostsComponent
+  }]
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
