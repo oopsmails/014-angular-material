@@ -21,7 +21,62 @@ export interface GitHubUser {
   score: number;
 }
 
-export interface State {
+export interface GitHubRepoSearchResponse {
+  total_count: number;
+  incomplete_results: boolean;
+  items: GitHubRepo[];
+}
+
+export interface GitHubRepo {
+  id: number;
+  node_id: string;
   name: string;
+  full_name: string;
+  private: boolean;
+  owner: GitHubUser;
+  clone_url: string;
+  forks_count: number;
+  open_issues_count: number;
+}
+export interface UsState {
+  id?: number;
+  stateName: string;
   flag_img?: string;
+  region?: string;
+  cities?: UsCity[];
+}
+
+export interface UsCity {
+  id: number;
+  cityName: string;
+  inStateName?: string;
+}
+
+export interface Car {
+  id: number;
+  brand: string;
+  model: string;
+  year?: string;
+  description?: string;
+}
+
+export interface CarGroup {
+  brand: string;
+  items?: Car[];
+}
+
+export class Card {
+  public title: string;
+  public text: string;
+  public hide: boolean;
+
+  constructor(title: string, text: string) {
+    this.title = title;
+    this.text = text;
+    this.hide = true;
+  }
+
+  toggle() {
+    this.hide = !this.hide;
+  }
 }
