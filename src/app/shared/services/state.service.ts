@@ -1,190 +1,190 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, map, tap, noop } from 'rxjs';
-import { GitHubUser, GitHubUserSearchResponse, State } from '../models/shared.model';
+import { UsState } from '../models';
 
 const statesWithFlags = [
   {
-    name: 'Alabama',
+    stateName: 'Alabama',
     flag_img: '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png',
   },
   {
-    name: 'Alaska',
+    stateName: 'Alaska',
     flag_img: 'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png',
   },
   {
-    name: 'Arizona',
+    stateName: 'Arizona',
     flag_img: '9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png',
   },
   {
-    name: 'Arkansas',
+    stateName: 'Arkansas',
     flag_img: '9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png',
   },
   {
-    name: 'California',
+    stateName: 'California',
     flag_img: '0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png',
   },
   {
-    name: 'Colorado',
+    stateName: 'Colorado',
     flag_img: '4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png',
   },
   {
-    name: 'Connecticut',
+    stateName: 'Connecticut',
     flag_img: '9/96/Flag_of_Connecticut.svg/39px-Flag_of_Connecticut.svg.png',
   },
   {
-    name: 'Delaware',
+    stateName: 'Delaware',
     flag_img: 'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png',
   },
   {
-    name: 'Florida',
+    stateName: 'Florida',
     flag_img: 'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png',
   },
   {
-    name: 'Georgia',
+    stateName: 'Georgia',
     flag_img:
       '5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png',
   },
   {
-    name: 'Hawaii',
+    stateName: 'Hawaii',
     flag_img: 'e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png',
   },
-  { name: 'Idaho', flag_img: 'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png' },
+  { stateName: 'Idaho', flag_img: 'a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png' },
   {
-    name: 'Illinois',
+    stateName: 'Illinois',
     flag_img: '0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png',
   },
   {
-    name: 'Indiana',
+    stateName: 'Indiana',
     flag_img: 'a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png',
   },
-  { name: 'Iowa', flag_img: 'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png' },
+  { stateName: 'Iowa', flag_img: 'a/aa/Flag_of_Iowa.svg/44px-Flag_of_Iowa.svg.png' },
   {
-    name: 'Kansas',
+    stateName: 'Kansas',
     flag_img: 'd/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png',
   },
   {
-    name: 'Kentucky',
+    stateName: 'Kentucky',
     flag_img: '8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png',
   },
   {
-    name: 'Louisiana',
+    stateName: 'Louisiana',
     flag_img: 'e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png',
   },
-  { name: 'Maine', flag_img: '3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png' },
+  { stateName: 'Maine', flag_img: '3/35/Flag_of_Maine.svg/45px-Flag_of_Maine.svg.png' },
   {
-    name: 'Maryland',
+    stateName: 'Maryland',
     flag_img: 'a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png',
   },
   {
-    name: 'Massachusetts',
+    stateName: 'Massachusetts',
     flag_img: 'f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png',
   },
   {
-    name: 'Michigan',
+    stateName: 'Michigan',
     flag_img: 'b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png',
   },
   {
-    name: 'Minnesota',
+    stateName: 'Minnesota',
     flag_img: 'b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png',
   },
   {
-    name: 'Mississippi',
+    stateName: 'Mississippi',
     flag_img: '4/42/Flag_of_Mississippi.svg/45px-Flag_of_Mississippi.svg.png',
   },
   {
-    name: 'Missouri',
+    stateName: 'Missouri',
     flag_img: '5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png',
   },
   {
-    name: 'Montana',
+    stateName: 'Montana',
     flag_img: 'c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png',
   },
   {
-    name: 'Nebraska',
+    stateName: 'Nebraska',
     flag_img: '4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png',
   },
   {
-    name: 'Nevada',
+    stateName: 'Nevada',
     flag_img: 'f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png',
   },
   {
-    name: 'New Hampshire',
+    stateName: 'New Hampshire',
     flag_img: '2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png',
   },
   {
-    name: 'New Jersey',
+    stateName: 'New Jersey',
     flag_img: '9/92/Flag_of_New_Jersey.svg/45px-Flag_of_New_Jersey.svg.png',
   },
   {
-    name: 'New Mexico',
+    stateName: 'New Mexico',
     flag_img: 'c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png',
   },
   {
-    name: 'New York',
+    stateName: 'New York',
     flag_img: '1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png',
   },
   {
-    name: 'North Carolina',
+    stateName: 'North Carolina',
     flag_img: 'b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png',
   },
   {
-    name: 'North Dakota',
+    stateName: 'North Dakota',
     flag_img: 'e/ee/Flag_of_North_Dakota.svg/38px-Flag_of_North_Dakota.svg.png',
   },
-  { name: 'Ohio', flag_img: '4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png' },
+  { stateName: 'Ohio', flag_img: '4/4c/Flag_of_Ohio.svg/46px-Flag_of_Ohio.svg.png' },
   {
-    name: 'Oklahoma',
+    stateName: 'Oklahoma',
     flag_img: '6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png',
   },
   {
-    name: 'Oregon',
+    stateName: 'Oregon',
     flag_img: 'b/b9/Flag_of_Oregon.svg/46px-Flag_of_Oregon.svg.png',
   },
   {
-    name: 'Pennsylvania',
+    stateName: 'Pennsylvania',
     flag_img: 'f/f7/Flag_of_Pennsylvania.svg/45px-Flag_of_Pennsylvania.svg.png',
   },
   {
-    name: 'Rhode Island',
+    stateName: 'Rhode Island',
     flag_img: 'f/f3/Flag_of_Rhode_Island.svg/32px-Flag_of_Rhode_Island.svg.png',
   },
   {
-    name: 'South Carolina',
+    stateName: 'South Carolina',
     flag_img: '6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png',
   },
   {
-    name: 'South Dakota',
+    stateName: 'South Dakota',
     flag_img: '1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png',
   },
   {
-    name: 'Tennessee',
+    stateName: 'Tennessee',
     flag_img: '9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png',
   },
-  { name: 'Texas', flag_img: 'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png' },
-  { name: 'Utah', flag_img: 'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png' },
+  { stateName: 'Texas', flag_img: 'f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png' },
+  { stateName: 'Utah', flag_img: 'f/f6/Flag_of_Utah.svg/45px-Flag_of_Utah.svg.png' },
   {
-    name: 'Vermont',
+    stateName: 'Vermont',
     flag_img: '4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png',
   },
   {
-    name: 'Virginia',
+    stateName: 'Virginia',
     flag_img: '4/47/Flag_of_Virginia.svg/44px-Flag_of_Virginia.svg.png',
   },
   {
-    name: 'Washington',
+    stateName: 'Washington',
     flag_img: '5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png',
   },
   {
-    name: 'West Virginia',
+    stateName: 'West Virginia',
     flag_img: '2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png',
   },
   {
-    name: 'Wisconsin',
+    stateName: 'Wisconsin',
     flag_img: '2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png',
   },
   {
-    name: 'Wyoming',
+    stateName: 'Wyoming',
     flag_img: 'b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png',
   },
 ];
@@ -194,22 +194,22 @@ export class StateService {
   errorMessage?: string;
   constructor(private http: HttpClient) {}
 
-  getStates(): Observable<State[]> {
+  getStates(): Observable<UsState[]> {
     console.log('getStates ....');
     return of(statesWithFlags);
   }
 
-  searchStates(term: string): Observable<State[]> {
+  searchStates(term: string): Observable<UsState[]> {
     console.log('searchStates ....', term);
     if (term === '') {
       return of([]);
     }
     return this.getStates().pipe(
-      map((items: State[]) => {
+      map((items: UsState[]) => {
         return (
-          items.filter((item: State) => {
+          items.filter((item: UsState) => {
             // console.log('searchState ...', term, item.name.toLowerCase().indexOf(term.toLowerCase()));
-            return item.name.toLowerCase().indexOf(term.toLowerCase()) >= 0;
+            return item.stateName.toLowerCase().indexOf(term.toLowerCase()) >= 0;
           }) || []
         );
       }),
