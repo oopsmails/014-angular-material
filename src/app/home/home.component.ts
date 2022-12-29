@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { Card } from '../shared/models';
 import { HomeDataService } from './home.data.service';
-import { Card } from './models/home.models';
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
@@ -12,14 +12,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject();
   cards$!: Observable<Card[]>;
 
-  constructor(
-    private router: Router,
-    private homeDataService: HomeDataService
-  ) {}
+  constructor(private router: Router, private homeDataService: HomeDataService) {}
 
-  ngOnInit() {
-    this.cards$ = this.homeDataService.getCards();
-  }
+  ngOnInit() {}
 
   navToPage(page: string) {
     console.log('HomeComponent, navToPage, page = ' + page);
